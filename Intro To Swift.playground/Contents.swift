@@ -194,6 +194,74 @@ default:
     print("You did great")
 }
 
+// ########## Day 4 ##########
+// For Loops
+let count = 1...10
+
+for number in count{
+    print("Number is \(number)")
+}
+
+let albums = ["Red", "1989", "Andrew"]
+for album in albums{
+    print(album)
+}
+
+for _ in 1...5{
+    print("play")
+}
+
+// While Loops
+var number = 1
+while number <= 20{
+    //print(number)
+    number += 1
+}
+
+// Repeat Loops
+var num2 = 1
+repeat{
+    print(num2)
+    num2 += 1
+}while num2 <= 20
+
+// Exiting loop
+var countDown = 10
+while countDown >= 0{
+    if countDown == 4{
+        print("I am bored")
+        break
+    }
+    countDown -= 1
+}
+
+// Exiting nested loop
+outerLoop: for i in 1...10{
+    for j in 1...10{
+        let product = i * j
+        print("\(i) * \(j) is \(product)")
+        if product == 50{
+            break outerLoop
+        }
+    }
+}
+
+// Skipping item
+for i in 1...10{
+    if i % 2 == 1{
+        continue
+    }
+    print(i)
+}
+
+// Infinite loops
+
+
+
+
+
+
+
 
 
 

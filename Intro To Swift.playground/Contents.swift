@@ -256,11 +256,81 @@ for i in 1...10{
 
 // Infinite loops
 
+// ########## Day 5 ##########
+// Writing functions
+func printHelp(){
+    let message = "This is my first function"
+    print(message)
+}
+printHelp()
 
+// Passing parameters
+func sumNum(x: Int, y: Int){
+    print(x+y)
+}
+sumNum(x: 2, y: 5)
 
+// Returning Values
+func getSquare(x: Int)->Int{
+    return x*x
+}
+print(getSquare(x: 2))
 
+//Parameter labels
+func sayHello(to name: String){
+    print("Say hello to \(name)")
+}
+sayHello(to: "Andrew")
 
+//Omitting parameter labels
+func greet(_ person: String){
+    print("Hello, \(person)")
+}
+greet("Taylor")
 
+//Default parameters
+func defaultGreet(_ person: String, nicely: Bool = true){
+    if nicely == true{
+        print("Hello, \(person)")
+    }else{
+        print("Oh no, it's \(person) again...")
+    }
+}
+defaultGreet("Andrew")
+defaultGreet("Andrew", nicely: false)
+
+// Variadic functions
+func squareAll(numbers: Int...){
+    for number in numbers{
+    print("\(number) square is \(number * number)")
+    }
+}
+squareAll(numbers: 1,2,3,4,5)
+
+// Writing throwing functions
+enum PasswordError: Error{
+    case obvious
+}
+func checkPassword(_ password: String) throws -> Bool{
+    if password == "password"{
+        throw PasswordError.obvious
+    }
+    return true
+}
+do{
+    try checkPassword("password")
+    print("That password is good!")
+}catch{
+    print("You can't use this password")
+}
+
+// inout Prameters
+func doubleInPlace(number: inout Int){
+    number *= 2
+}
+var myNum = 10
+doubleInPlace(number: &myNum)
+print(myNum)
 
 
 

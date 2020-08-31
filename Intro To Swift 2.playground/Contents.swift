@@ -91,9 +91,160 @@ func travCap () -> (String) -> Void{
         coutner += 1
     }
 }
-let re = travCap()
-re("Egypt")
-re("Egypt")
-re("Egypt")
-re("Egypt")
-re("Egypt")
+//let re = travCap()
+//re("Egypt")
+//re("Egypt")
+//re("Egypt")
+//re("Egypt")
+//re("Egypt")
+
+//######## Day 8 ########
+// Creating your own struct
+struct Sport{
+    var name: String
+}
+var tennis = Sport(name: "Tennis")
+print(tennis.name)
+tennis.name = "Football"
+
+// Computed Property
+struct Sport2{
+    var name: String
+    var isOlympic: Bool
+    var olympicStatus: String{
+        if isOlympic{
+            return "Olyimpic sport"
+        }else{
+            return "Not Olyimpic sport"
+        }
+    }
+}
+
+let chess = Sport2(name: "Chess", isOlympic: true)
+print(chess.olympicStatus)
+
+// Property observer
+struct Progress{
+    var task: String
+    var amount: Int{
+        willSet{
+            print("\(task) is going to start change its amount")
+        }
+        didSet{
+            print("\(task) is done by \(amount)%")
+        }
+    }
+}
+var task1 = Progress(task: "Loading", amount: 0)
+task1.amount = 30
+task1.amount = 80
+task1.amount = 100
+
+//Methods
+struct City{
+    var population: Int
+    
+    func collectTaxes() -> Int{
+        return population * 1000
+    }
+}
+let giza = City(population: 8740)
+print(giza.collectTaxes())
+
+//Mutating Methods
+struct Person{
+    var name: String
+    
+    mutating func makeAnonymous(){
+        name = "Yeahh!!"
+    }
+}
+var p1 = Person(name: "Andrew")
+p1.makeAnonymous()
+
+//let p2 = Person(name: "Andrew")
+//p2.makeAnonymous()
+
+//Properties and methods of strings
+let myName = "Andrew Maher Daker"
+print(myName.count)
+print(myName.sorted())
+
+//Properties and methods of arrays
+var toys = ["Woody"]
+print(toys.count)
+toys.append("Buzz")
+toys.index(of: "Buzz")
+
+//######## Day 9 ########
+// Initializers
+struct User{
+    var username: String
+    init(){
+        username = "Anonymous"
+        print("New User has been Created!")
+    }
+}
+var us1 =  User()
+us1.username = "Andrew"
+
+//Referring to the current instance
+struct Person2{
+    var name: String
+    init(name: String){
+        print("\(name) is bored!")
+        self.name = name
+    }
+}
+var per1 = Person2(name: "Andrew")
+
+//Lazy properties
+struct FamilyTree{
+    init(){
+        print("Creating family tree")
+    }
+}
+struct Person3{
+    var name: String
+    lazy var familyTree = FamilyTree()
+
+    init(name: String){
+        self.name = name
+    }
+}
+var per3 = Person3(name: "Andrew")
+per3.familyTree
+
+//Static properties and methods
+struct Student{
+    static var classSize = 0
+    var name: String
+    
+    init(name: String){
+        self.name = name
+        Student.classSize += 1
+    }
+}
+let ed = Student(name: "Ed")
+let taylor = Student(name: "Taylor")
+print(Student.classSize)
+
+// Access Control
+struct Person4{
+    private var id: Int
+    init(id: Int){
+        self.id = id
+    }
+    
+    func getSocialSec()->String{
+        return "My Social Security is \(id)"
+    }
+}
+let per4 = Person4(id: 12345)
+print(per4.getSocialSec())
+
+
+
+
+
+

@@ -243,8 +243,77 @@ struct Person4{
 let per4 = Person4(id: 12345)
 print(per4.getSocialSec())
 
+//######## Day 10 ########
+//Creating your own classes
+class Dog{
+    var name: String
+    var breed: String
+    
+    init(name: String, breed:String){
+        self.name = name
+        self.breed = breed
+    }
+    
+    func makeNoide(){
+        print("Woof!")
+    }
+}
+let poppy = Dog(name: "Poppy", breed: "Poddle")
 
+//Class inheritance
+class Poddle: Dog{
+    init(name: String){
+        super.init(name: name, breed: "Poddle")
+    }
+    
+    //Overriding methods
+    override func makeNoide() {
+        print("Yip!")
+    }
+}
+let podle = Poddle(name: "Poppy")
+podle.makeNoide()
 
+//Final classes
+final class Cat{
+    var name: String
+    
+    init(name: String){
+        self.name = name
+    }
+    
+    func makeNoide() {
+        print("Meawo!")
+    }
+}
 
+//Copying objects
+class Singer{
+    var name = "Andrew"
+}
+var sing = Singer()
+print(sing.name)
 
+var sing2 = sing
+sing2.name = "Taylor"
+print(sing.name)
+
+//Deinitializers
+class Person5{
+    var name = "Andrew"
+    init(){
+        print("My name is \(name)")
+    }
+    deinit{
+        print("\(name) not available")
+    }
+}
+for _ in 1...3{
+    let p = Person5()
+}
+
+//Mutability
+let and = Person5()
+and.name = "Andrew Maher"
+print(and.name)
 

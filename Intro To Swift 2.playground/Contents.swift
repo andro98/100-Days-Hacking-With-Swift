@@ -309,7 +309,7 @@ class Person5{
     }
 }
 for _ in 1...3{
-    let p = Person5()
+    let _ = Person5()
 }
 
 //Mutability
@@ -317,3 +317,73 @@ let and = Person5()
 and.name = "Andrew Maher"
 print(and.name)
 
+//######## Day 10 ########
+//Protocols
+protocol Identifiable{
+    var id: String{get set}
+}
+
+struct User2: Identifiable{
+    var id: String
+}
+
+func displayId(thing: Identifiable){
+    print("Id is \(thing.id)")
+}
+
+//Protocol inheritance
+protocol Payable{
+    func calculateSal() -> Int
+}
+protocol NeedTraining{
+    func study()
+}
+protocol HasVacation{
+    func takeVacation(days: Int)
+}
+
+protocol Employee: Payable, NeedTraining, HasVacation{
+    
+}
+
+// Extensions
+extension Int{
+    func sqaured()-> Int{
+        return self * self
+    }
+    func isEven ()-> Bool{
+        return self % 2 == 0
+    }
+}
+
+var num = 8
+num.sqaured()
+num.isEven()
+
+// Protocol Extensions
+let names = ["Andrew", "Mina", "Bishoy", "Kirollose"]
+extension Collection{
+    func summarize(){
+        print("There are \(count) of.")
+        for name in self{
+            print(name)
+        }
+    }
+}
+names.summarize()
+
+//Protocol-oriented programming
+protocol Identifiable2{
+    var id: String{get set}
+    func identify()
+}
+extension Identifiable2{
+    func identify(){
+        print("My id is \(id)")
+    }
+}
+struct User3: Identifiable2{
+    var id: String
+}
+let userTest = User3(id: "123")
+userTest.identify()

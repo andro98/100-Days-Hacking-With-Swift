@@ -317,7 +317,7 @@ let and = Person5()
 and.name = "Andrew Maher"
 print(and.name)
 
-//######## Day 10 ########
+//######## Day 11 ########
 //Protocols
 protocol Identifiable{
     var id: String{get set}

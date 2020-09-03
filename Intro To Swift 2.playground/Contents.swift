@@ -387,3 +387,96 @@ struct User3: Identifiable2{
 }
 let userTest = User3(id: "123")
 userTest.identify()
+
+//######## Day 12 ########
+//Handling missing data
+var age: Int? = nil
+age = 38
+
+//Unwrapping optionals
+var nam: String? = nil
+if let unwrapped = nam{
+    print("\(unwrapped.count)")
+}else{
+    print("Missing ")
+}
+
+//Unwrapping with guard
+func greet(_ name: String?){
+    guard let unwrap = name else{
+        print("Missing")
+        return
+    }
+    print("Hello \(unwrap)")
+}
+greet("Andrew")
+
+//Force unwrapping
+let fUnw = "5"
+var iFunw = Int(fUnw)!
+
+//Implicitly unwrapped optionals
+var iUn: Int! = nil
+iUn = 10
+
+//Nil coalescing
+func username(for id: Int)-> String?{
+    if id == 1{
+        return "Andrew Maher"
+    }else{
+        return nil
+    }
+}
+let uId = username(for: 50) ?? "Anonymous"
+
+//Optional chaining
+let oChain: [String] = ["Andrew", "Maher", "Daker"]
+let uP = oChain.first?.uppercased()
+
+//Optional try
+enum PasswordError: Error {
+    case obvious
+}
+
+func checkPassword(_ password: String) throws -> Bool {
+    if password == "password" {
+        throw PasswordError.obvious
+    }
+    
+    return true
+}
+if let pas = try? checkPassword("password"){
+    print("Good")
+}else{
+    print("Too Obvious")
+}
+
+let pass = try! checkPassword("andrew")
+
+//Failable initializers
+struct FInit{
+    var id: String
+    init? (id: String){
+        if id.count == 9{
+            self.id  = id
+        }else{
+            return nil
+        }
+    }
+}
+let fI = FInit(id: "1234")
+
+//Typecasting
+class Animal{}
+class Fish: Animal{}
+class Dogg: Animal{
+    func makeNoise(){
+        print("Woof!")
+    }
+}
+let pets = [Fish(), Dogg(), Fish(), Dogg()]
+for pet in pets{
+    if let dog = pet as? Dogg{
+        dog.makeNoise()
+    }
+}

@@ -12,11 +12,13 @@ class DetailsViewController: UIViewController {
 
     @IBOutlet var imageView: UIImageView!
     var selectedImage: String?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = selectedImage
         navigationItem.largeTitleDisplayMode = .never
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
         
         if let imageToLoad = selectedImage{
             imageView.image = UIImage(named: imageToLoad)
@@ -35,5 +37,13 @@ class DetailsViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    @objc func shareTapped(){
+        let image = imageView.image!
+        let jpeg = UIImageJPEGRepresentation(image, 0.8)
+        let vc = UIActivityViewController(activityItems: [jpeg!, selectedImage!], applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
 }

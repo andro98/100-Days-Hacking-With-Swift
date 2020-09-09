@@ -43,6 +43,8 @@ class ViewController: UITableViewController {
         print(pictures)
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,6 +67,13 @@ class ViewController: UITableViewController {
             vc.selectedImage = pictures[indexPath.row]
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    @objc func shareTapped(){
+        let url = "Try it: https://github.com/andro98/100-Days-Hacking-With-Swift/tree/master/Storm%20Viewer/Storm%20Viewer"
+        let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
 }
 

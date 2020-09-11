@@ -12,7 +12,7 @@ import WebKit
 class ViewController: UIViewController, WKNavigationDelegate {
     var webView: WKWebView!
     var progress: UIProgressView!
-    var websites = ["google.com, apple.com"]
+    var websites = ["google.com", "apple.com"]
     
     override func loadView() {
         webView = WKWebView()
@@ -36,8 +36,9 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         
-        let url = URL(string: "https://" + websites[0])!
-        webView.load(URLRequest(url: url))
+        let url = URL(string: "https://" + websites[0])
+        webView.load(URLRequest(url: url!))
+        print("Loading...")
         webView.allowsBackForwardNavigationGestures = true
     }
     
@@ -53,22 +54,30 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         title = webView.title
+        print("Loaded...")
     }
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    /*func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         let url = navigationAction.request.url
+        var isContaine: Bool = false
         
         if let host = url?.host{
             for site in websites{
+                print("\(site): \(host)")
                 if site.contains(host){
+                    print("true contains")
                     decisionHandler(.allow)
-                    return
+                    isContaine = true
+                    break
                 }
             }
         }
         
-        decisionHandler(.cancel)
-    }
+        if !isContaine{
+            print("Canceld")
+            decisionHandler(.cancel)
+        }
+    }*/
     
     func openPage(action: UIAlertAction){
         let url = URL(string:"https://" + action.title!)!

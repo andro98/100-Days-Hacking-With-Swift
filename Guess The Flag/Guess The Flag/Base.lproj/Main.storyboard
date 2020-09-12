@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,45 +23,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fpp-Uh-sb4">
-                                <rect key="frame" x="60" y="100" width="200" height="100"/>
-                                <state key="normal" image="us"/>
-                                <connections>
-                                    <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RtY-iS-4je"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ybb-Lo-T75">
-                                <rect key="frame" x="60" y="230" width="200" height="100"/>
-                                <state key="normal" image="us"/>
-                                <connections>
-                                    <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0Em-IX-ztF"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qQu-WY-0Bg">
-                                <rect key="frame" x="60" y="360" width="200" height="100"/>
-                                <state key="normal" image="us"/>
-                                <connections>
-                                    <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Tp-NI-Z5M"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYX-50-RED">
-                                <rect key="frame" x="129" y="468" width="62" height="35"/>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="30"/>
-                                <color key="textColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="NJ0-Jn-pL8">
+                                <rect key="frame" x="14" y="118" width="292" height="395"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fpp-Uh-sb4">
+                                        <rect key="frame" x="10" y="0.0" width="272" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Fpp-Uh-sb4" secondAttribute="height" multiplier="280:103" id="1bh-Vv-SUC"/>
+                                        </constraints>
+                                        <state key="normal" image="us"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RtY-iS-4je"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ybb-Lo-T75">
+                                        <rect key="frame" x="10" y="120" width="272" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ybb-Lo-T75" secondAttribute="height" multiplier="280:103" id="tg4-zQ-ZgE"/>
+                                        </constraints>
+                                        <state key="normal" image="us"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0Em-IX-ztF"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qQu-WY-0Bg">
+                                        <rect key="frame" x="10" y="240" width="272" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="qQu-WY-0Bg" secondAttribute="height" multiplier="280:103" id="6Mc-RZ-gUn"/>
+                                        </constraints>
+                                        <state key="normal" image="us"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Tp-NI-Z5M"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYX-50-RED">
+                                        <rect key="frame" x="115" y="360" width="62" height="35"/>
+                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="30"/>
+                                        <color key="textColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="qQu-WY-0Bg" firstAttribute="centerX" secondItem="ybb-Lo-T75" secondAttribute="centerX" id="0hc-ar-ad9"/>
-                            <constraint firstItem="FYX-50-RED" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="4YX-gd-zd9"/>
-                            <constraint firstItem="Fpp-Uh-sb4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="36" id="9Ba-oO-aEl"/>
-                            <constraint firstItem="qQu-WY-0Bg" firstAttribute="top" secondItem="ybb-Lo-T75" secondAttribute="bottom" constant="30" id="Ag2-fl-hsq"/>
-                            <constraint firstItem="ybb-Lo-T75" firstAttribute="centerX" secondItem="Fpp-Uh-sb4" secondAttribute="centerX" id="G9F-Dt-vkl"/>
-                            <constraint firstItem="ybb-Lo-T75" firstAttribute="top" secondItem="Fpp-Uh-sb4" secondAttribute="bottom" constant="30" id="QMD-CR-Cnp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FYX-50-RED" secondAttribute="bottom" constant="65" id="S28-5j-Zkm"/>
-                            <constraint firstItem="FYX-50-RED" firstAttribute="top" secondItem="qQu-WY-0Bg" secondAttribute="bottom" constant="8" id="ciZ-h6-P7W"/>
-                            <constraint firstItem="Fpp-Uh-sb4" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="yII-3G-cmg"/>
+                            <constraint firstItem="NJ0-Jn-pL8" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="SzK-we-3os"/>
+                            <constraint firstItem="NJ0-Jn-pL8" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="nbT-L3-CUJ"/>
+                            <constraint firstItem="NJ0-Jn-pL8" firstAttribute="width" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="34:71" constant="20" id="xUH-fm-5Nv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

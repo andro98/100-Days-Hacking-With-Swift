@@ -18,7 +18,12 @@ class ViewController: UIViewController {
     var activatedButtons = [UIButton]()
     var solutions = [String]()
     
-    var score = 0
+    var score = 0{
+        didSet{
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    var currentGuess = 0
     var level = 1
     
     override func loadView() {
@@ -97,12 +102,16 @@ class ViewController: UIViewController {
         let submit = UIButton(type: .system)
         submit.translatesAutoresizingMaskIntoConstraints = false
         submit.setTitle("SUBMIT", for: .normal)
+        submit.layer.borderWidth = 1
+        submit.layer.borderColor = UIColor.gray.cgColor
         submit.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
         view.addSubview(submit)
         
         let clear = UIButton(type: .system)
         clear.translatesAutoresizingMaskIntoConstraints = false
         clear.setTitle("CLEAR", for: .normal)
+        clear.layer.borderWidth = 1
+        clear.layer.borderColor = UIColor.gray.cgColor
         clear.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
         view.addSubview(clear)
         
@@ -118,6 +127,8 @@ class ViewController: UIViewController {
                 letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
                 letterButton.setTitle("WWW", for: .normal)
                 letterButton.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
+                letterButton.layer.borderWidth = 1
+                letterButton.layer.borderColor = UIColor.gray.cgColor
                 let frame = CGRect(x: col * width, y: row * height, width: width, height: height)
                 letterButton.frame = frame
                 buttonsView.addSubview(letterButton)
@@ -181,7 +192,7 @@ class ViewController: UIViewController {
         }
         cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
         answerLabel.text = solutionsString.trimmingCharacters(in: .whitespacesAndNewlines)
-        
+        letterBits.shuffle()
         if letterButtons.count == letterBits.count{
             for i in 0..<letterButtons.count{
                 letterButtons[i].setTitle(letterBits[i], for: .normal)
@@ -189,17 +200,83 @@ class ViewController: UIViewController {
         }
     }
     
+    func levelUp(action: UIAlertAction){
+        level += 1
+        
+        solutions.removeAll(keepingCapacity: true)
+        loadLevel()
+        
+        for button in letterButtons{
+            button.isHidden = false
+        }
+    }
     
     @objc func letterTapped(_ sender: UIButton){
-        
+        guard let buttonTitle = sender.titleLabel?.text else {return}
+        currentAnswer.text = currentAnswer.text?.appending(buttonTitle)
+        activatedButtons.append(sender)
+        sender.isHidden = true
     }
     
     @objc func submitTapped(_ sender: UIButton){
+        guard let answerText = currentAnswer.text else { return }
         
+        if let solPos = solutions.firstIndex(of: answerText){
+            activatedButtons.removeAll()
+            
+            var splitAnswers = answerLabel.text?.components(separatedBy: "\n")
+            splitAnswers?[solPos] = answerText
+            answerLabel.text = splitAnswers?.joined(separator: "\n")
+            
+            currentAnswer.text = ""
+            score += 1
+            currentGuess += 1
+            
+            if currentGuess % 7 == 0{
+                showAlert(title: "Well Done!", message: "Are you ready for the next level?", buttonTitle: "Let's go!", handler: levelUp)
+            }
+        }else{
+            score -= 1
+            showAlert(title: "Wrong!", message: "Try another guess!", buttonTitle: "Try again!", handler: clearAnswer)
+        }
+    }
+    
+    func showAlert(title: String, message: String, buttonTitle: String, handler: @escaping (UIAlertAction) -> Void){
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: handler))
+        present(ac, animated: true)
     }
     
     @objc func clearTapped(_ sender: UIButton){
-        
+     clearAnswer()
+    }
+    
+    func clearAnswer(action: UIAlertAction? = nil){
+        currentAnswer.text = ""
+        for button in activatedButtons{
+            button.isHidden = false
+        }
+        activatedButtons.removeAll()
     }
 }
 
+extension Array where Element == String{
+    func firstIndex(of value: String) -> Int?{
+        for i in 0..<self.count{
+            if self[i] == value{
+                return i
+            }
+        }
+        return nil
+    }
+}
+
+extension Array{
+    mutating func shuffle(){
+        if count < 2 { return  }
+        for i in 0..<(self.count - 1) {
+            let j = Int(arc4random_uniform(UInt32(self.count - i))) + i
+            self.swapAt(i, j)
+        }
+    }
+}

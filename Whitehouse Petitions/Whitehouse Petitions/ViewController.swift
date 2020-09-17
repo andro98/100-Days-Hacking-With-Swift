@@ -15,7 +15,8 @@ class ViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadPetitions()
+        performSelector(inBackground: #selector(loadPetitions), with: nil)
+//        loadPetitions()
     }
     
     @IBAction func creaditInfo(_ sender: Any) {
@@ -30,13 +31,17 @@ class ViewController: UITableViewController {
         let submitButton = UIAlertAction(title: "Search", style: .default){
             [weak self, weak ac] _ in
             guard let query = ac?.textFields?[0].text else { return }
-            self?.submitSearch(query)
+            self?.callSearch(query)
         }
         ac.addAction(submitButton)
         present(ac, animated: true)
     }
     
-    func submitSearch(_ query: String){
+    func callSearch(_ query: String){
+        performSelector(inBackground: #selector(submitSearch), with: query)
+    }
+    
+    @objc func submitSearch(_ query: String){
         if query.isEmpty{
             filteredPetitions = petitions
             print("is Empty and filteredPetition of size \(filteredPetitions.count) against \(petitions.count)")
@@ -49,18 +54,19 @@ class ViewController: UITableViewController {
             })
             print("Not Empty and filteredPetition of size \(filteredPetitions.count) against \(petitions.count)")
         }
-        tableView.reloadData()
+        tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
     }
     
-    func loadPetitions(){
-       let urlString = createUrlBasedOnTabTag()
+    @objc func loadPetitions() {
+        let urlString = createUrlBasedOnTabTag()
         if let url = URL(string: urlString){
             if let data = try? Data(contentsOf: url){
-                parse(json: data)
+               parse(json: data)
                 return
             }
         }
-        showError()
+        performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
+//        showError()
     }
     
     func createUrlBasedOnTabTag() -> String{
@@ -74,14 +80,14 @@ class ViewController: UITableViewController {
         if let jsonPetetions = try? decoder.decode(Petetions.self, from: json){
             petitions = jsonPetetions.results
             filteredPetitions = petitions
-            tableView.reloadData()
+            tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
             return
+        }else{
+            performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
         }
-        showError()
-    
     }
     
-    func showError(){
+    @objc func showError(){
         let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)

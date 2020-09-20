@@ -14,6 +14,22 @@ class ViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
+        /*let defaults = UserDefaults.standard
+        if let savePeople = defaults.object(forKey: "people") as? Data{
+            if let decodedPeople = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savePeople) as? [Person]{
+                people = decodedPeople!
+            }
+        }*/
+        let defaults = UserDefaults.standard
+        if let savePeople = defaults.object(forKey: "people") as? Data{
+            let jsonDecoder = JSONDecoder()
+            do {
+                people = try jsonDecoder.decode([Person].self, from: savePeople)
+                
+            }catch{
+                print("Failed to load people")
+            }
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -43,12 +59,27 @@ class ViewController: UICollectionViewController {
                 [weak self, weak ac] _ in
                 guard let newName = ac?.textFields?[0].text else { return }
                 person.name = newName
+                self?.save()
                 self?.collectionView?.reloadData()
             })
             ac.addAction(UIAlertAction(title: "Cancle", style: .cancel))
             self?.present(ac, animated: true)
         })
         present(ac_choose, animated: true)
+    }
+    
+    func save(){
+        /*if let saveData = try? NSKeyedArchiver.archivedData(withRootObject: people, requiringSecureCoding: false){
+            let defaults = UserDefaults.standard
+            defaults.set(saveData, forKey: "people")
+        }*/
+        let jsonEncoder = JSONEncoder()
+        if let saveData = try? jsonEncoder.encode(people){
+            let defaults = UserDefaults.standard
+            defaults.set(saveData, forKey: "people")
+        }else{
+            print("Failed to save Data")
+        }
     }
 }
 
@@ -72,6 +103,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         print(imagePath)
         let p = Person(name: "Unkown", image: imagePath.path)
         people.append(p)
+        save()
         collectionView?.reloadData()
         dismiss(animated: true)
     }
